@@ -77,10 +77,6 @@ class Authorisator extends Base
 
         // action
         $path = '';
-        //if ($request->Input->Subdomains != '') {
-        //    $path .= $request->Input->Subdomains.'.';
-        //}
-        //$path .= $request->Input->Domain;
         if ($request->StrippedPath != '') {
             $path .= '/'.$request->StrippedPath;
         }
