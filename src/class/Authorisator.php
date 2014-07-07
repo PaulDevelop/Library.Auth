@@ -2,6 +2,9 @@
 
 namespace Com\PaulDevelop\Library\Auth;
 
+use Com\PaulDevelop\Library\Common\Base;
+use Doctrine\Tests\Common\Annotations\Ticket\Doctrine\ORM\Mapping\Entity;
+
 class Authorisator extends Base
 {
     /**
