@@ -40,10 +40,7 @@ class Authorisator extends Base
                 // check exception
                 if ($this->checkException(
                     $request,
-                    array_merge(
-                        array($accessRestriction->LoginPath),
-                        $accessRestriction->ExceptionPaths
-                    )
+                    $accessRestriction->ExceptionPaths
                 )
                 ) {
                     $result = true;

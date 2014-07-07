@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "644ffe3b68019f4dad78ca90eb1614b6",
+    "hash": "9baa80b62067f142f34e005c3aa1e2ab",
     "packages": [
         {
             "name": "pauldevelop/library-common",
@@ -56,74 +56,21 @@
             "time": "2014-06-25 23:01:33"
         },
         {
-            "name": "pauldevelop/library-modeling-entities",
-            "version": "0.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PaulDevelop/Library.Modeling.Entities.git",
-                "reference": "f18e78c8b51ffd44c6ff92aad8f39494586ad321"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PaulDevelop/Library.Modeling.Entities/zipball/f18e78c8b51ffd44c6ff92aad8f39494586ad321",
-                "reference": "f18e78c8b51ffd44c6ff92aad8f39494586ad321",
-                "shasum": ""
-            },
-            "require": {
-                "pauldevelop/library-common": "~1.0.4"
-            },
-            "require-dev": {
-                "phpdocumentor/phpdocumentor": "2.5.*@dev",
-                "phpunit/phpunit": "3.7.*",
-                "squizlabs/php_codesniffer": "1.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Com\\PaulDevelop\\Library\\Modeling\\Entities\\": "src/class"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rüdiger Scheumann",
-                    "email": "info@pauldevelop.de",
-                    "homepage": "http://pauldevelop.de"
-                }
-            ],
-            "description": "Library to model entities.",
-            "homepage": "https://github.com/pauldevelop/library.modeling.entities",
-            "keywords": [
-                "PaulDevelop",
-                "library"
-            ],
-            "time": "2014-04-30 09:18:47"
-        },
-        {
-            "name": "pauldevelop/library-persistance",
+            "name": "pauldevelop/library-persistence",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/PaulDevelop/Library.Persistance.git",
-                "reference": "d336a2e98189aefb32fd12f7fd81b910ec75070b"
+                "url": "https://github.com/PaulDevelop/Library.Persistence.git",
+                "reference": "55abdf2d863cef1051b77e41994688ab928e53e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PaulDevelop/Library.Persistance/zipball/d336a2e98189aefb32fd12f7fd81b910ec75070b",
-                "reference": "d336a2e98189aefb32fd12f7fd81b910ec75070b",
+                "url": "https://api.github.com/repos/PaulDevelop/Library.Persistence/zipball/55abdf2d863cef1051b77e41994688ab928e53e5",
+                "reference": "55abdf2d863cef1051b77e41994688ab928e53e5",
                 "shasum": ""
             },
             "require": {
-                "pauldevelop/library-common": "~1.0.4",
-                "pauldevelop/library-modeling-entities": "0.0.3"
+                "pauldevelop/library-common": "*@dev"
             },
             "require-dev": {
                 "phpdocumentor/phpdocumentor": "2.5.*@dev",
@@ -138,7 +85,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Com\\PaulDevelop\\Library\\Persistance\\": "src/class"
+                    "Com\\PaulDevelop\\Library\\Persistence\\": "src/class"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -152,13 +99,13 @@
                     "homepage": "http://pauldevelop.de"
                 }
             ],
-            "description": "Library to handle persistance.",
-            "homepage": "https://github.com/pauldevelop/library.persistance",
+            "description": "Library to handle persistence.",
+            "homepage": "https://github.com/pauldevelop/library.persistence",
             "keywords": [
                 "PaulDevelop",
                 "library"
             ],
-            "time": "2014-04-30 10:33:54"
+            "time": "2014-06-27 17:17:40"
         },
         {
             "name": "willdurand/negotiation",
@@ -2173,12 +2120,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Config.git",
-                "reference": "32018f35de323afd1bffb601f9e760ff3fb6ba05"
+                "reference": "255da03130f66b01c249afe2a7e540798f3c9d5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Config/zipball/32018f35de323afd1bffb601f9e760ff3fb6ba05",
-                "reference": "32018f35de323afd1bffb601f9e760ff3fb6ba05",
+                "url": "https://api.github.com/repos/symfony/Config/zipball/255da03130f66b01c249afe2a7e540798f3c9d5c",
+                "reference": "255da03130f66b01c249afe2a7e540798f3c9d5c",
                 "shasum": ""
             },
             "require": {
@@ -2214,7 +2161,7 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "http://symfony.com",
-            "time": "2014-05-23 14:36:49"
+            "time": "2014-07-01 06:41:10"
         },
         {
             "name": "symfony/console",
@@ -2714,12 +2661,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "8ce37115802e257a984a82d38254884085060024"
+                "reference": "11ea5976e38413a7a65cd2e0e2b1da9d969af513"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/8ce37115802e257a984a82d38254884085060024",
-                "reference": "8ce37115802e257a984a82d38254884085060024",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/11ea5976e38413a7a65cd2e0e2b1da9d969af513",
+                "reference": "11ea5976e38413a7a65cd2e0e2b1da9d969af513",
                 "shasum": ""
             },
             "require": {
@@ -2763,7 +2710,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-07-05 12:19:05"
+            "time": "2014-07-07 12:54:10"
         },
         {
             "name": "zendframework/zend-cache",
@@ -3353,7 +3300,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "pauldevelop/library-common": 20,
-        "pauldevelop/library-persistance": 20,
+        "pauldevelop/library-persistence": 20,
         "phpdocumentor/phpdocumentor": 20
     },
     "platform": [

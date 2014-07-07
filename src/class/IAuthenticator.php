@@ -2,7 +2,7 @@
 
 namespace Com\PaulDevelop\Library\Auth;
 
-use Com\PaulDevelop\Library\Persistance\Entity;
+use Com\PaulDevelop\Library\Persistence\Entity;
 
 interface IAuthenticator
 {

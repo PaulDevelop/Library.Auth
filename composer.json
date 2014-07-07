@@ -18,7 +18,7 @@
     },
     "require": {
         "pauldevelop/library-common": "*@dev",
-        "pauldevelop/library-persistance": "*@dev",
+        "pauldevelop/library-persistence": "*@dev",
         "willdurand/negotiation" : "*"
     },
     "require-dev": {
