@@ -8,6 +8,6 @@ class AccessRestrictionCollection extends GenericCollection
 {
     public function __construct()
     {
-        parent::__construct('De\Welt\JobPortal\AccessRestriction');
+        parent::__construct('Com\PaulDevelop\Library\Auth\AccessRestriction');
     }
 }
