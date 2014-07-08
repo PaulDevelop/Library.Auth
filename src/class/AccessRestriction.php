@@ -8,11 +8,11 @@ use Com\PaulDevelop\Library\Common\Base;
  * Class AccessRestriction
  * @package De\Welt\JobPortal
  *
- * @property string         $Pattern
- * @property IAuthenticator $Authenticator
- * @property string         $RoleName
- * @property string         $LoginPath
- * @property array          $ExceptionPaths
+ * @property string           $Pattern
+ * @property IAuthenticator   $Authenticator
+ * @property string           $RoleName
+ * @property callback         $Callback
+ * @property array            $ExceptionPaths
  */
 class AccessRestriction extends Base
 {
@@ -29,9 +29,9 @@ class AccessRestriction extends Base
      */
     private $roleName;
     /**
-     * @var string
+     * @var callback
      */
-    private $loginPath;
+    private $callback;
     /**
      * @var array
      */
@@ -41,20 +41,20 @@ class AccessRestriction extends Base
      * @param string         $pattern
      * @param IAuthenticator $authenticator
      * @param string         $roleName
-     * @param string         $loginPath
+     * @param callback       $callback
      * @param array          $exceptionPaths
      */
     public function __construct(
         $pattern = '',
         IAuthenticator $authenticator = null,
         $roleName = '',
-        $loginPath = '',
+        $callback = null,
         $exceptionPaths = array()
     ) {
         $this->pattern = $pattern;
         $this->authenticator = $authenticator;
         $this->roleName = $roleName;
-        $this->loginPath = $loginPath;
+        $this->callback = $callback;
         $this->exceptionPaths = $exceptionPaths;
     }
 
@@ -88,14 +88,14 @@ class AccessRestriction extends Base
         $this->roleName = $roleName;
     }
 
-    public function getLoginPath()
+    public function getCallback()
     {
-        return $this->loginPath;
+        return $this->callback;
     }
 
-    public function setLoginPath($loginPath = null)
+    public function setCallback($callback = null)
     {
-        $this->loginPath = $loginPath;
+        $this->callback = $callback;
     }
 
     public function getExceptionPaths()

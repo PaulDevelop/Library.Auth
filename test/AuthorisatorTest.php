@@ -6,7 +6,8 @@ use Com\PaulDevelop\Library\Persistence\Entity;
 use Com\PaulDevelop\Library\Persistence\IPropertyCollection;
 use Com\PaulDevelop\Library\Persistence\Property;
 
-class TestRoleChecker implements IRoleChecker {
+class PositiveRoleChecker implements IRoleChecker
+{
     /**
      * @param int $id
      *
@@ -18,7 +19,21 @@ class TestRoleChecker implements IRoleChecker {
     }
 }
 
-class TestAuthenticator implements IAuthenticator {
+class NegativeRoleChecker implements IRoleChecker
+{
+    /**
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function check($id = 0)
+    {
+        return false;
+    }
+}
+
+class PositiveAuthenticator implements IAuthenticator
+{
     /**
      * @param Entity $credentialEntity
      *
@@ -30,26 +45,43 @@ class TestAuthenticator implements IAuthenticator {
     }
 }
 
+class NegativeAuthenticator implements IAuthenticator
+{
+    /**
+     * @param Entity $credentialEntity
+     *
+     * @return boolean
+     */
+    public function check(Entity $credentialEntity)
+    {
+        return false;
+    }
+}
+
 class AuthorisatorTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
      */
-    public function testProcessSimpleTemplate()
+    public function testPositiveAuthenticationPositiveRoleCheck()
     {
         $authorisator = new Authorisator(
-            new TestRoleChecker()
+            new PositiveRoleChecker()
         );
 
         $authorisator->addAccessRestriction(
             new AccessRestriction(
                 'backend.welt.pauldevelop.com/*',
-                new TestAuthenticator(),
+                new PositiveAuthenticator(),
                 'Administrator',
-                'login/',
+                function () {
+                    echo 'Authentication required';
+                    //header('Location: backend.welt.pauldevelop.com/login/');
+                    exit;
+                },
                 array(
-                    'login',
-                    'login/process'
+                    'backend.welt.pauldevelop.com/login/',
+                    'backend.welt.pauldevelop.com/login/process/'
                 )
             )
         );
@@ -59,12 +91,51 @@ class AuthorisatorTest extends \PHPUnit_Framework_TestCase
 
         $credentials->Properties->add(new Property('id', 1), 'id');
 
-        if ($authorisator->check($request, $credentials)) {
+        $url = 'backend.welt.pauldevelop.com/';
 
-        }
+        //if ($authorisator->check($url, $credentials)) {
+        //    echo 'okay';
+        //}
+        //else {
+        //    echo 'no access';
+        //}
 
-        //$template = new Template();
-        //$template->setTemplateFileName('test/_assets/templates/simple.template.pdt');
-        //$this->assertEquals('Simple', trim($template->process()));
+        $this->assertEquals(true, $authorisator->check($url, $credentials));
+    }
+
+    /**
+     * @test
+     */
+    public function testPositiveAuthenticationNegativeRoleCheck()
+    {
+        $authorisator = new Authorisator(
+            new NegativeRoleChecker()
+        );
+
+        $authorisator->addAccessRestriction(
+            new AccessRestriction(
+                'backend.welt.pauldevelop.com/*',
+                new PositiveAuthenticator(),
+                'Administrator',
+                function () {
+                    echo 'Authentication required';
+                    //header('Location: backend.welt.pauldevelop.com/login/');
+                    exit;
+                },
+                array(
+                    'backend.welt.pauldevelop.com/login/',
+                    'backend.welt.pauldevelop.com/login/process/'
+                )
+            )
+        );
+
+        $credentials = new Entity();
+        $credentials->Properties = new IPropertyCollection();
+
+        $credentials->Properties->add(new Property('id', 1), 'id');
+
+        $url = 'backend.welt.pauldevelop.com/';
+
+        $this->assertEquals(false, $authorisator->check($url, $credentials));
     }
 }

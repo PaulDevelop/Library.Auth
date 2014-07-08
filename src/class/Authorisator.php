@@ -28,7 +28,8 @@ class Authorisator extends Base
         $this->collection->add($accessRestriction);
     }
 
-    public function check(Request $request = null, Entity $credentials = null)
+    //public function check(Request $request = null, Entity $credentials = null)
+    public function check($url = '', Entity $credentials = null)
     {
         // init
         $result = false;
@@ -36,10 +37,10 @@ class Authorisator extends Base
         // action
         foreach ($this->collection as $accessRestriction) {
             /** @var AccessRestriction $accessRestriction */
-            if ($this->checkPattern($accessRestriction->Pattern, $request)) {
+            if ($this->checkPattern($accessRestriction->Pattern, $url)) {
                 // check exception
                 if ($this->checkException(
-                    $request,
+                    $url,
                     $accessRestriction->ExceptionPaths
                 )
                 ) {
@@ -52,13 +53,7 @@ class Authorisator extends Base
                             $result = true;
                         }
                     } else {
-                        $base = $request->Input->Protocol.'://';
-                        if ($request->Input->Subdomains != '') {
-                            $base .= $request->Input->Subdomains.'.';
-                        }
-                        $base .= $request->Input->Domain;
-                        header('Location: '.$base.'/'.$accessRestriction->LoginPath);
-                        exit;
+                        call_user_func($accessRestriction->Callback);
                     }
                 }
 
@@ -70,21 +65,18 @@ class Authorisator extends Base
         return $result;
     }
 
-    private function checkException(Request $request = null, $exceptionPaths = array())
+    private function checkException($url = '', $exceptionPaths = array())
     {
         // init
         $result = false;
 
         // action
-        $path = '';
-        if ($request->StrippedPath != '') {
-            $path .= '/'.$request->StrippedPath;
-        }
-        $path = trim($path, "\t\n\r\0\x0B/");
+        $url = trim($url, "\t\n\r\0\x0B/");
 
         foreach ($exceptionPaths as $exceptionPath) {
             $exceptionPath = trim($exceptionPath, "\t\n\r\0\x0B/");
-            if ($path == $exceptionPath) {
+            //if ($path == $exceptionPath) {
+            if ($url == $exceptionPath) {
                 $result = true;
                 break;
             }
@@ -94,7 +86,7 @@ class Authorisator extends Base
         return $result;
     }
 
-    private function checkPattern($pattern = '', Request $request = null)
+    private function checkPattern($pattern = '', $url = '')
     {
         // ^(subdomain\.)*domain(\/(folder\/)*(file\.ext)?)?$
 
@@ -116,18 +108,10 @@ class Authorisator extends Base
         $pattern = '/'.$pattern.'/';
 
         // path
-        $path = '';
-        if ($request->Input->Subdomains != '') {
-            $path .= $request->Input->Subdomains.'.';
-        }
-        $path .= $request->Input->Domain;
-        if ($request->StrippedPath != '') {
-            $path .= '/'.$request->StrippedPath;
-        }
-        $path = trim($path, "\t\n\r\0\x0B/");
+        $url = trim($url, "\t\n\r\0\x0B/");
 
         // match
-        $result = preg_match($pattern, $path);
+        $result = preg_match($pattern, $url);
 
         // return
         return $result;
