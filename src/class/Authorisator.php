@@ -32,27 +32,26 @@ class Authorisator extends Base
     public function check($url = '', Entity $credentials = null)
     {
         // init
-        $result = false;
+        //$result = false;
+        $result = true;
 
         // action
         foreach ($this->collection as $accessRestriction) {
             /** @var AccessRestriction $accessRestriction */
             if ($this->checkPattern($accessRestriction->Pattern, $url)) {
                 // check exception
-                if ($this->checkException(
+                if (!$this->checkException(
                     $url,
                     $accessRestriction->ExceptionPaths
                 )
                 ) {
-                    $result = true;
-                } else {
                     if (($id = $accessRestriction->Authenticator->check($credentials)) !== false) {
-
                         // check, if user impersonates given role
-                        if ($this->roleChecker->check($id, $accessRestriction->RoleName)) {
-                            $result = true;
+                        if (!$this->roleChecker->check($id, $accessRestriction->RoleName)) {
+                            $result = false;
                         }
                     } else {
+                        $result = false;
                         call_user_func($accessRestriction->Callback);
                     }
                 }
