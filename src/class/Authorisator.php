@@ -42,18 +42,10 @@ class Authorisator extends Base
         $result = true;
 
         // action
-        /** @var Variable $variable */
-        foreach ( $this->variables as $variable ) {
-            $url = str_replace('%'.$variable->Name.'%', $variable->Value, $url);
-        }
+        $url = $this->replaceVariables($url);
 
         foreach ($this->collection as $accessRestriction) {
-            $accessRestrictionPattern = $accessRestriction->Pattern;
-
-            /** @var Variable $variable */
-            foreach ( $this->variables as $variable ) {
-                $accessRestrictionPattern = str_replace('%'.$variable->Name.'%', $variable->Value, $accessRestrictionPattern);
-            }
+            $accessRestrictionPattern = $this->replaceVariables($accessRestriction->Pattern);
 
             /** @var AccessRestriction $accessRestriction */
             //if ($this->checkPattern($accessRestriction->Pattern, $url)) {
@@ -71,17 +63,32 @@ class Authorisator extends Base
                         }
                     } else {
                         $result = false;
-                        if ( $accessRestriction->CallbackUrl != '' ) {
-                            header('Location: '.$accessRestriction->CallbackUrl);
-                        }
-                        else {
-                          call_user_func($accessRestriction->Callback);
+                        if ($accessRestriction->CallbackUrl != '') {
+                            $accessRestrictionCallbackUrl = $this->replaceVariables($accessRestriction->CallbackUrl);
+                            header('Location: '.$accessRestrictionCallbackUrl);
+                        } else {
+                            call_user_func($accessRestriction->Callback);
                         }
                     }
                 }
 
                 break;
             }
+        }
+
+        // return
+        return $result;
+    }
+
+    private function replaceVariables($input = '')
+    {
+        // init
+        $result = $input;
+
+        // action
+        /** @var Variable $variable */
+        foreach ($this->variables as $variable) {
+            $result = str_replace('%'.$variable->Name.'%', $variable->Value, $result);
         }
 
         // return
