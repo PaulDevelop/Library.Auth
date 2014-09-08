@@ -71,7 +71,12 @@ class Authorisator extends Base
                         }
                     } else {
                         $result = false;
-                        call_user_func($accessRestriction->Callback);
+                        if ( $accessRestriction->CallbackUrl != '' ) {
+                            header('Location: '.$accessRestriction->CallbackUrl);
+                        }
+                        else {
+                          call_user_func($accessRestriction->Callback);
+                        }
                     }
                 }
 
