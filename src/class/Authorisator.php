@@ -13,13 +13,19 @@ class Authorisator extends Base
     private $collection;
 
     /**
+     * @var VariableCollection
+     */
+    private $variables;
+
+    /**
      * @var IRoleChecker
      */
     private $roleChecker;
 
-    public function __construct(IRoleChecker $roleChecker)
+    public function __construct(IRoleChecker $roleChecker, VariableCollection $variables = null)
     {
         $this->roleChecker = $roleChecker;
+        $this->variables = $variables == null ? new VariableCollection() : $variables;
         $this->collection = new AccessRestrictionCollection();
     }
 
@@ -36,9 +42,22 @@ class Authorisator extends Base
         $result = true;
 
         // action
+        /** @var Variable $variable */
+        foreach ( $this->variables as $variable ) {
+            $url = str_replace('%'.$variable->Name.'%', $variable->Value, $url);
+        }
+
         foreach ($this->collection as $accessRestriction) {
+            $accessRestrictionPattern = $accessRestriction->Pattern;
+
+            /** @var Variable $variable */
+            foreach ( $this->variables as $variable ) {
+                $accessRestrictionPattern = str_replace('%'.$variable->Name.'%', $variable->Value, $accessRestrictionPattern);
+            }
+
             /** @var AccessRestriction $accessRestriction */
-            if ($this->checkPattern($accessRestriction->Pattern, $url)) {
+            //if ($this->checkPattern($accessRestriction->Pattern, $url)) {
+            if ($this->checkPattern($accessRestrictionPattern, $url)) {
                 // check exception
                 if (!$this->checkException(
                     $url,

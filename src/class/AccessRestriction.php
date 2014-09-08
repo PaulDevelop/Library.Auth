@@ -11,6 +11,7 @@ use Com\PaulDevelop\Library\Common\Base;
  * @property string           $Pattern
  * @property IAuthenticator   $Authenticator
  * @property string           $RoleName
+ * @property callback         $CallbackUrl
  * @property callback         $Callback
  * @property array            $ExceptionPaths
  */
@@ -29,6 +30,10 @@ class AccessRestriction extends Base
      */
     private $roleName;
     /**
+     * @var string
+     */
+    private $callbackUrl;
+    /**
      * @var callback
      */
     private $callback;
@@ -41,6 +46,7 @@ class AccessRestriction extends Base
      * @param string         $pattern
      * @param IAuthenticator $authenticator
      * @param string         $roleName
+     * @param string         $callbackUrl
      * @param callback       $callback
      * @param array          $exceptionPaths
      */
@@ -48,12 +54,14 @@ class AccessRestriction extends Base
         $pattern = '',
         IAuthenticator $authenticator = null,
         $roleName = '',
+        $callbackUrl = '',
         $callback = null,
         $exceptionPaths = array()
     ) {
         $this->pattern = $pattern;
         $this->authenticator = $authenticator;
         $this->roleName = $roleName;
+        $this->callbackUrl = $callbackUrl;
         $this->callback = $callback;
         $this->exceptionPaths = $exceptionPaths;
     }
@@ -86,6 +94,11 @@ class AccessRestriction extends Base
     public function setRoleName($roleName = '')
     {
         $this->roleName = $roleName;
+    }
+
+    public function getCallbackUrl()
+    {
+        return $this->callbackUrl;
     }
 
     public function getCallback()
