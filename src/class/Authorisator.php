@@ -104,7 +104,7 @@ class Authorisator extends Base
         $url = trim($url, "\t\n\r\0\x0B/");
 
         foreach ($exceptionPaths as $exceptionPath) {
-            $exceptionPath = trim($exceptionPath, "\t\n\r\0\x0B/");
+            $exceptionPath = $this->replaceVariables(trim($exceptionPath, "\t\n\r\0\x0B/"));
             //if ($path == $exceptionPath) {
             if ($url == $exceptionPath) {
                 $result = true;
