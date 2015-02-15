@@ -120,7 +120,7 @@ To add a new access restriction to only allow users of the role 'Administrator' 
 $authorisator->addAccessRestriction(
     new AccessRestriction(
         'backend.%baseHost%/*',
-        new CredentialAuthenticator(),
+        new CredentialAuthenticator(), // implements IAuthenticator
         'Administrator',
         'http://backend.%baseHost%/login/',
         null,
@@ -132,7 +132,7 @@ $authorisator->addAccessRestriction(
 );
 ```
 
-An example implementation of the *IAuthenticator* interface could look like this:
+An example implementation of the [IAuthenticator](src/class/IAuthenticator.php) interface could look like this:
 
 ```php
 class CredentialAuthenticator implements IAuthenticator
@@ -186,7 +186,7 @@ In this example, the check method gets credentials in form of name and password.
 a storage, if a user with this name is known. We then verify the password and return the users id. You can easily adopt
 this class to check the user ip or session id.
 
-Now it's time to actually check if a resource is accessible to an user. Do this with the check method of the 
+Now it's time to actually check if a resource is accessible to an user. Do this with the *check* method of the 
 *Authorisator* object:
 
 ```php
