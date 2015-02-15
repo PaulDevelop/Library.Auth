@@ -32,7 +32,7 @@ implementation must check whether the user with the id *$id* has the role with t
 A sample IRoleChecker implementation could look like this:
 
 ```php
-class RoleChecker implements IRoleChecker
+class MyRoleChecker implements IRoleChecker
 {
     /**
      * @var model\ImpersonationPeer
@@ -120,7 +120,7 @@ To add a new access restriction to only allow users of the role 'Administrator' 
 $authorisator->addAccessRestriction(
     new AccessRestriction(
         'backend.%baseHost%/*',
-        new DemoAuthenticator(),
+        new CredentialAuthenticator(),
         'Administrator',
         'http://backend.%baseHost%/login/',
         null,
@@ -131,6 +131,60 @@ $authorisator->addAccessRestriction(
     )
 );
 ```
+
+An example implementation of the *IAuthenticator* interface could look like this:
+
+```php
+class CredentialAuthenticator implements IAuthenticator
+{
+    /**
+     * @var IPathQueryable
+     */
+    private $storage;
+
+    public function __construct(IPathQueryable $storage = null)
+    {
+        $this->storage = $storage;
+    }
+
+    /**
+     * @param Entity $credentialEntity
+     *
+     * @return bool
+     */
+    public function check(Entity $credentialEntity)
+    {
+        // init
+        $result = false;
+
+        // action
+        if (($nameProperty = $credentialEntity->Properties['name']) !== null) {
+            /** @var IPathQueryable $storage */
+            $storage = $this->storage;
+            $userList = $storage->queryPath('user[@name='.$nameProperty->Value.']#');
+            if ( sizeof($userList) > 0 ) {
+                /** @var Entity $userEntity */
+                $userEntity = $userList[0];
+                if ($userEntity != null
+                    && password_verify(
+                        $credentialEntity->Properties['password']->Value,
+                        $storageEntity->Properties['password']->Value
+                    )
+                ) {
+                    $result = $storageEntity->Properties['id']->Value;
+                }
+            }
+        }
+
+        // return
+        return $result;
+    }
+}
+```
+
+In this example, the check method gets credentials in form of name and password. If the name property is set, we query
+a storage, if a user with this name is known. We then verify the password and return the users id. You can easily adopt
+this class to check the user ip or session id.
 
 Now it's time to actually check if a resource is accessible to an user. Do this with the check method of the 
 *Authorisator* object:
