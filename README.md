@@ -13,11 +13,15 @@ objects via a string containing the role's name.
 ### Usage
 
 First create a new [Authorisator](src/class/Authorisator.php) object; the constructor takes an object implementing the 
-[IRoleChecker](src/class/IRoleChecker.php) interface.
+[IRoleChecker](src/class/IRoleChecker.php) interface and a collection of variables.
 
 ```php
+$variables = new VariableCollection();
+$variables->add(new Variable('baseHost', 'example.com'));
+
 $authorisator = new Authorisator(
-    new MyRoleChecker() // implements IRoleChecker
+    new MyRoleChecker(), // implements IRoleChecker
+    $variables
 );
 ```
 
@@ -25,15 +29,17 @@ The *IRoleChecker* interface defines a *check* method, which takes a user id and
 implementation must check whether the user with the id *$id* has the role with the name *$roleName*. You don't call the
 *IRoleChecker*'s directly; it is called from within the *Authorisator*'s check method.
 
+The variables collection contains variables, which can be used in the patterns as described in the list below.
+
 The next step is to add an access restriction, which is done by calling the *addAccessRestriction* method on the
 *Authorisator* object. This method takes a [AccessRestriction](src/class/AccessRestriction.php) object as parameter, 
 which has the following properties:
  
 - pattern
   
-    A pattern describing the resource's url. You can use the variable *%baseHost%*, which will contain the server's
-    second and top level domain (equals the domain without subdomains). Also you can add the wildcard (*) at the end;
-    that way all urls "under" that path are protected as well.
+    A pattern describing the resource's url. In this example we defined the variable *baseHost*, which we can use by
+    surrounding the name with % signs (%baseUrl%). If you add a wildcard (*) at the end, all urls starting with the 
+    given path are protected as well.
 
 - authenticator
   
