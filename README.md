@@ -80,7 +80,7 @@ roles are read by the *RolePeer*, while the information which user impersonates 
 impersonates the role $roleName. If yes, we return true, otherwise false.
 
 The variables collection noted while instancing the *Authorisator* object contains variables, which can be used in the
-patterns as described in the list below.
+patterns as described in the next section.
 
 The next step is to add an access restriction, which is done by calling the *addAccessRestriction* method on the
 *Authorisator* object. This method takes a [AccessRestriction](src/class/AccessRestriction.php) object as parameter, 
