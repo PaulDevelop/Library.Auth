@@ -27,9 +27,60 @@ $authorisator = new Authorisator(
 
 The *IRoleChecker* interface defines a *check* method, which takes a user id and role name as parameters; an 
 implementation must check whether the user with the id *$id* has the role with the name *$roleName*. You don't call the
-*IRoleChecker*'s directly; it is called from within the *Authorisator*'s check method.
+*IRoleChecker*'s directly; it will be called from within the *Authorisator*'s check method.
 
-The variables collection contains variables, which can be used in the patterns as described in the list below.
+A sample IRoleChecker implementation could look like this:
+
+```php
+class RoleChecker implements IRoleChecker
+{
+    /**
+     * @var model\ImpersonationPeer
+     */
+    private $impersonationPeer;
+
+    /**
+     * @var model\RolePeer
+     */
+    private $rolePeer;
+
+    public function __construct(model\ImpersonationPeer $impersonationPeer = null, model\RolePeer $rolePeer = null)
+    {
+        $this->impersonationPeer = $impersonationPeer;
+        $this->rolePeer = $rolePeer;
+    }
+
+    public function check($id = 0, $roleName = '')
+    {
+        // init
+        $result = false;
+
+        // action
+        $roles = $this->rolePeer->queryPath('role[@name='.$roleName.']#');
+        if (count($roles) == 1) {
+            /** @var model\Role $role */
+            $role = $roles[0];
+            $impersonations = $this->impersonationPeer->queryPath(
+                'impersonation[@user='.$id.',@role='.$role->Id.']#'
+            );
+            if (count($impersonations) == 1) {
+                $result = true;
+            }
+        }
+
+        // return
+        return $result;
+    }
+}
+```
+
+In this example, the constructor takes two peer objects, which access data from a data source like a database. The
+roles are read by the *RolePeer*, while the information which user impersonates which role is read via the 
+*ImpersonationPeer*. First, we query a role with $roleName; if we found a role, we also check, if the user $id 
+impersonates the role $roleName. If yes, we return true, otherwise false.
+
+The variables collection noted while instancing the *Authorisator* object contains variables, which can be used in the
+patterns as described in the list below.
 
 The next step is to add an access restriction, which is done by calling the *addAccessRestriction* method on the
 *Authorisator* object. This method takes a [AccessRestriction](src/class/AccessRestriction.php) object as parameter, 
