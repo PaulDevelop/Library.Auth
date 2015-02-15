@@ -32,7 +32,8 @@ which has the following properties:
 - pattern
   
     A pattern describing the resource's url. You can use the variable *%baseHost%*, which will contain the server's
-    second and top level domain (equals the domain without subdomains).
+    second and top level domain (equals the domain without subdomains). Also you can add the wildcard (*) at the end;
+    that way all urls "under" that path are protected as well.
 
 - authenticator
   
@@ -55,7 +56,8 @@ which has the following properties:
     An array of resource url patterns, which must not be checked and therefore useful for example for the urls of login
     forms. You may use the *%baseHost%* variable.
 
-To add a new access restriction, call the *addAccessRestriction* method:
+To add a new access restriction to only allow users of the role 'Administrator' to access backend resources, call the
+*addAccessRestriction* method as follows:
 
 ```php
 $authorisator->addAccessRestriction(
