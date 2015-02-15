@@ -25,7 +25,7 @@ The *IRoleChecker* interface defines a *check* method, which takes a user id and
 implementation must check whether the user with the id *$id* has the role with the name *$roleName*. You don't call the
 *IRoleChecker*'s directly; it will be called from within the *Authorisator*'s check method.
 
-A sample IRoleChecker implementation could look like this:
+A sample IRoleChecker implementation might look like this:
 
 ```php
 class MyRoleChecker implements IRoleChecker
@@ -128,7 +128,7 @@ $authorisator->addAccessRestriction(
 );
 ```
 
-An example implementation of the [IAuthenticator](src/class/IAuthenticator.php) interface could look like this:
+An example implementation of the [IAuthenticator](src/class/IAuthenticator.php) interface might look like this:
 
 ```php
 class CredentialAuthenticator implements IAuthenticator
