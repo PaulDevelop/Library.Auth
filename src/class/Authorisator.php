@@ -35,7 +35,7 @@ class Authorisator extends Base
     }
 
     //public function check(Request $request = null, Entity $credentials = null)
-    public function check($url = '', Entity $credentials = null)
+    public function check($url = '')//, Entity $credentials = null)
     {
         // init
         //$result = false;
@@ -56,7 +56,8 @@ class Authorisator extends Base
                     $accessRestriction->ExceptionPaths
                 )
                 ) {
-                    if (($id = $accessRestriction->Authenticator->check($credentials)) !== false) {
+//                    if (($id = $accessRestriction->Authenticator->check($credentials)) !== false) {
+                    if (($id = $accessRestriction->Authenticator->check($accessRestriction->Credentials)) !== false) {
                         // check, if user impersonates given role
                         if (!$this->roleChecker->check($id, $accessRestriction->RoleName)) {
                             $result = false;

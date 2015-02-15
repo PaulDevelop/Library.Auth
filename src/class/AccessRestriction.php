@@ -3,6 +3,7 @@
 namespace Com\PaulDevelop\Library\Auth;
 
 use Com\PaulDevelop\Library\Common\Base;
+use Com\PaulDevelop\Library\Persistence\Entity;
 
 /**
  * Class AccessRestriction
@@ -10,6 +11,7 @@ use Com\PaulDevelop\Library\Common\Base;
  *
  * @property string           $Pattern
  * @property IAuthenticator   $Authenticator
+ * @property Entity           $Credentials
  * @property string           $RoleName
  * @property callback         $CallbackUrl
  * @property callback         $Callback
@@ -26,10 +28,13 @@ class AccessRestriction extends Base
      */
     private $authenticator;
     /**
+     * @var Entity
+     */
+    private $credentials;
+    /**
      * @var string
      */
     private $roleName;
-    // $credentials
     /**
      * @var string
      */
@@ -46,6 +51,7 @@ class AccessRestriction extends Base
     /**
      * @param string         $pattern
      * @param IAuthenticator $authenticator
+     * @param Entity         $credentials
      * @param string         $roleName
      * @param string         $callbackUrl
      * @param callback       $callback
@@ -54,6 +60,7 @@ class AccessRestriction extends Base
     public function __construct(
         $pattern = '',
         IAuthenticator $authenticator = null,
+        Entity $credentials = null,
         $roleName = '',
         $callbackUrl = '',
         $callback = null,
@@ -61,6 +68,7 @@ class AccessRestriction extends Base
     ) {
         $this->pattern = $pattern;
         $this->authenticator = $authenticator;
+        $this->credentials = $credentials;
         $this->roleName = $roleName;
         $this->callbackUrl = $callbackUrl;
         $this->callback = $callback;
@@ -85,6 +93,16 @@ class AccessRestriction extends Base
     public function setAuthenticator(IAuthenticator $authenticator = null)
     {
         $this->authenticator = $authenticator;
+    }
+
+    public function getCredentials()
+    {
+        return $this->credentials;
+    }
+
+    public function setCredentials(Entity $credentials = null)
+    {
+        $this->credentials = $credentials;
     }
 
     public function getRoleName()
