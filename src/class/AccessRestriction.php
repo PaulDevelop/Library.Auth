@@ -7,11 +7,13 @@ use Com\PaulDevelop\Library\Persistence\Entity;
 
 /**
  * Class AccessRestriction
+ *
  * @package De\Welt\JobPortal
  *
  * @property string           $Pattern
  * @property IAuthenticator   $Authenticator
  * @property Entity           $Credentials
+ * @property IRoleChecker     $RoleChecker
  * @property string           $RoleName
  * @property callback         $CallbackUrl
  * @property callback         $Callback
@@ -31,6 +33,10 @@ class AccessRestriction extends Base
      * @var Entity
      */
     private $credentials;
+    /**
+     * @var IRoleChecker
+     */
+    private $roleChecker;
     /**
      * @var string
      */
@@ -52,6 +58,7 @@ class AccessRestriction extends Base
      * @param string         $pattern
      * @param IAuthenticator $authenticator
      * @param Entity         $credentials
+     * @param IRoleChecker   $roleChecker
      * @param string         $roleName
      * @param string         $callbackUrl
      * @param callback       $callback
@@ -61,6 +68,7 @@ class AccessRestriction extends Base
         $pattern = '',
         IAuthenticator $authenticator = null,
         Entity $credentials = null,
+        IRoleChecker $roleChecker = null,
         $roleName = '',
         $callbackUrl = '',
         $callback = null,
@@ -69,6 +77,7 @@ class AccessRestriction extends Base
         $this->pattern = $pattern;
         $this->authenticator = $authenticator;
         $this->credentials = $credentials;
+        $this->roleChecker = $roleChecker;
         $this->roleName = $roleName;
         $this->callbackUrl = $callbackUrl;
         $this->callback = $callback;
@@ -103,6 +112,16 @@ class AccessRestriction extends Base
     public function setCredentials(Entity $credentials = null)
     {
         $this->credentials = $credentials;
+    }
+
+    public function getRoleChecker()
+    {
+        return $this->roleChecker;
+    }
+
+    public function setRoleChecker(IRoleChecker $roleChecker = null)
+    {
+        $this->roleChecker = $roleChecker;
     }
 
     public function getRoleName()

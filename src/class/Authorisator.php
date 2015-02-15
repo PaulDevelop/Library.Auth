@@ -3,7 +3,6 @@
 namespace Com\PaulDevelop\Library\Auth;
 
 use Com\PaulDevelop\Library\Common\Base;
-use Com\PaulDevelop\Library\Persistence\Entity;
 
 class Authorisator extends Base
 {
@@ -17,14 +16,15 @@ class Authorisator extends Base
      */
     private $variables;
 
-    /**
-     * @var IRoleChecker
-     */
-    private $roleChecker;
+//    /**
+//     * @var IRoleChecker
+//     */
+//    private $roleChecker;
 
-    public function __construct(IRoleChecker $roleChecker, VariableCollection $variables = null)
+//    public function __construct(IRoleChecker $roleChecker, VariableCollection $variables = null)
+    public function __construct(VariableCollection $variables = null)
     {
-        $this->roleChecker = $roleChecker;
+        //$this->roleChecker = $roleChecker;
         $this->variables = $variables == null ? new VariableCollection() : $variables;
         $this->collection = new AccessRestrictionCollection();
     }
@@ -59,7 +59,8 @@ class Authorisator extends Base
 //                    if (($id = $accessRestriction->Authenticator->check($credentials)) !== false) {
                     if (($id = $accessRestriction->Authenticator->check($accessRestriction->Credentials)) !== false) {
                         // check, if user impersonates given role
-                        if (!$this->roleChecker->check($id, $accessRestriction->RoleName)) {
+                        //if (!$this->roleChecker->check($id, $accessRestriction->RoleName)) {
+                        if (!$accessRestriction->RoleChecker->check($id, $accessRestriction->RoleName)) {
                             $result = false;
                         }
                     } else {
