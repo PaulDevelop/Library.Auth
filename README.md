@@ -1,16 +1,12 @@
 pauldevelop/library-auth
 ========================
 
-Commonly used classes to authenticate and authorize users and resources.
-
-Manual
-------
-
 This library enables your application to  check whether a user has a specific role and if this user is allowed to access
 certain parts of your application. For now it assumes, that your user objects are accessible via an integer id, and role
 objects via a string containing the role's name.
 
-### Usage
+Usage
+-----
 
 First create a new [Authorisator](src/class/Authorisator.php) object; the constructor takes an object implementing the 
 [IRoleChecker](src/class/IRoleChecker.php) interface and a collection of variables.

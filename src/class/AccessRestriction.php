@@ -29,6 +29,7 @@ class AccessRestriction extends Base
      * @var string
      */
     private $roleName;
+    // $credentials
     /**
      * @var string
      */
