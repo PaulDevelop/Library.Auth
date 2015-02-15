@@ -10,10 +10,11 @@ class PositiveRoleChecker implements IRoleChecker
 {
     /**
      * @param int $id
+     * @param string $name
      *
      * @return bool
      */
-    public function check($id = 0)
+    public function check($id = 0, $name = '')
     {
         return true;
     }
@@ -22,11 +23,12 @@ class PositiveRoleChecker implements IRoleChecker
 class NegativeRoleChecker implements IRoleChecker
 {
     /**
-     * @param int $id
+     * @param int    $id
+     * @param string $name
      *
      * @return bool
      */
-    public function check($id = 0)
+    public function check($id = 0, $name = '')
     {
         return false;
     }
