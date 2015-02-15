@@ -31,7 +31,8 @@ which has the following properties:
  
 - pattern
   
-    A pattern describing the resource's url.
+    A pattern describing the resource's url. You can use the variable *%baseHost%*, which will contain the server's
+    second and top level domain (equals the domain without subdomains).
 
 - authenticator
   
@@ -51,8 +52,11 @@ which has the following properties:
 
 - exceptionPaths
   
-    An array of resource url patterns, which must not be checked and therefore useful for urls of login forms etc.
-    
+    An array of resource url patterns, which must not be checked and therefore useful for example for the urls of login
+    forms. You may use the *%baseHost%* variable.
+
+To add a new access restriction, call the *addAccessRestriction* method:
+
 ```php
 $authorisator->addAccessRestriction(
     new AccessRestriction(
@@ -73,7 +77,6 @@ Now it's time to actually check if a resource is accessible to an user. Do this 
 *Authorisator* object:
 
 ```php
-
 // setup credentials
 $credentials = new Entity();
 $credentials->Properties = new IPropertyCollection();
