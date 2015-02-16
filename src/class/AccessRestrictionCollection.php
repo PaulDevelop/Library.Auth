@@ -6,8 +6,8 @@ use Com\PaulDevelop\Library\Common\GenericCollection;
 
 class AccessRestrictionCollection extends GenericCollection
 {
-    public function __construct()
+    public function __construct($initialValues = array(), $keyFieldName = '')
     {
-        parent::__construct('Com\PaulDevelop\Library\Auth\AccessRestriction');
+        parent::__construct('Com\PaulDevelop\Library\Auth\AccessRestriction', $initialValues, $keyFieldName);
     }
 }
