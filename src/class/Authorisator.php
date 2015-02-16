@@ -15,7 +15,6 @@ class Authorisator extends Base
      * @var VariableCollection
      */
     private $variables;
-
 //    /**
 //     * @var IRoleChecker
 //     */
