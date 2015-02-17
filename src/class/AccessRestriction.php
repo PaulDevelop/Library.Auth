@@ -87,7 +87,7 @@ class AccessRestriction extends Base
         $this->credentials = $credentials;
 //        $this->roleChecker = $roleChecker;
 //        $this->roleName = $roleName;
-        $this - $checkers = $checkers;
+        $this->$checkers = $checkers;
         $this->callbackUrl = $callbackUrl;
         $this->callback = $callback;
         $this->exceptionPaths = $exceptionPaths;
@@ -148,7 +148,7 @@ class AccessRestriction extends Base
         return $this->checkers;
     }
 
-    public function setCheckers($checkers = '')
+    public function setCheckers(ICheckerCollection $checkers = null)
     {
         $this->checkers = $checkers;
     }
