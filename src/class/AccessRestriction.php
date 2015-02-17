@@ -87,7 +87,7 @@ class AccessRestriction extends Base
         $this->credentials = $credentials;
 //        $this->roleChecker = $roleChecker;
 //        $this->roleName = $roleName;
-        $this->$checkers = $checkers;
+        $this->checkers = $checkers;
         $this->callbackUrl = $callbackUrl;
         $this->callback = $callback;
         $this->exceptionPaths = $exceptionPaths;
