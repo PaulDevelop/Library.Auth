@@ -56,16 +56,20 @@ class Authorisator extends Base
                 )
                 ) {
 //                    if (($id = $accessRestriction->Authenticator->check($credentials)) !== false) {
-                    if (($id = $accessRestriction->Authenticator->check($accessRestriction->Credentials)) !== 0) { // false
+                    //if (($id = $accessRestriction->Authenticator->check($accessRestriction->Credentials)) !== 0) { // false
+                    if ($accessRestriction->Authenticator != null
+                        && $accessRestriction->Credentials != null
+                        && ($id = $accessRestriction->Authenticator->check($accessRestriction->Credentials)) !== 0
+                    ) {
                         // check, if user impersonates given role
                         //if (!$this->roleChecker->check($id, $accessRestriction->RoleName)) {
 
 //                        if (!$accessRestriction->RoleChecker->check($id, $accessRestriction->RoleName)) {
 //                            $result = false;
 //                        }
-                        foreach ( $accessRestriction->Checkers as $checker ) {
+                        foreach ($accessRestriction->Checkers as $checker) {
                             /** @var IChecker $checker */
-                            if ( !$checker->check($id) ) {
+                            if (!$checker->check($id)) {
                                 $result = false;
                                 break;
                             }
@@ -132,16 +136,18 @@ class Authorisator extends Base
 
         // pattern
         $pattern = trim($pattern, "\t\n\r\0\x0B/");
-        if (($pos = strpos($pattern, '/*')) !== false) {
-            $pattern = substr($pattern, 0, $pos);
-        } else {
-            $pattern = $pattern.'$';
-        }
 
         if (($pos = strpos($pattern, '*.')) !== false) {
             $pattern = substr($pattern, $pos + 2);
         } else {
             $pattern = '^'.$pattern;
+        }
+
+        //if (($pos = strpos($pattern, '/*')) !== false) {
+        if (($pos = strpos($pattern, '*')) !== false) {
+            $pattern = substr($pattern, 0, $pos);
+        } else {
+            $pattern = $pattern.'$';
         }
         $pattern = str_replace('.', '\.', $pattern);
         $pattern = str_replace('/', '\/', $pattern);
