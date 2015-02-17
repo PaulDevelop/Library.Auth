@@ -55,28 +55,31 @@ class Authorisator extends Base
                     $accessRestriction->ExceptionPaths
                 )
                 ) {
+                    $id = 0;
 //                    if (($id = $accessRestriction->Authenticator->check($credentials)) !== false) {
                     //if (($id = $accessRestriction->Authenticator->check($accessRestriction->Credentials)) !== 0) { // false
                     if ($accessRestriction->Authenticator != null
                         && $accessRestriction->Credentials != null
                         && ($id = $accessRestriction->Authenticator->check($accessRestriction->Credentials)) !== 0
                     ) {
+                        $result = false;
                         // check, if user impersonates given role
                         //if (!$this->roleChecker->check($id, $accessRestriction->RoleName)) {
 
 //                        if (!$accessRestriction->RoleChecker->check($id, $accessRestriction->RoleName)) {
 //                            $result = false;
 //                        }
-                        foreach ($accessRestriction->Checkers as $checker) {
-                            /** @var IChecker $checker */
-                            if (!$checker->check($id)) {
-                                $result = false;
-                                break;
-                            }
-                        }
+                    }
 
-                    } else {
-                        $result = false;
+                    foreach ($accessRestriction->Checkers as $checker) {
+                        /** @var IChecker $checker */
+                        if (!$checker->check($id)) {
+                            $result = false;
+                            break;
+                        }
+                    }
+
+                    if ($result == false) {
                         if ($accessRestriction->CallbackUrl != '') {
                             $accessRestrictionCallbackUrl = $this->replaceVariables($accessRestriction->CallbackUrl);
                             header('Location: '.$accessRestrictionCallbackUrl);
