@@ -5,19 +5,20 @@ namespace Com\PaulDevelop\Library\Auth;
 use Com\PaulDevelop\Library\Common\Base;
 use Com\PaulDevelop\Library\Persistence\Entity;
 
+//* @property IRoleChecker     $RoleChecker
+//* @property string           $RoleName
 /**
  * Class AccessRestriction
  *
  * @package De\Welt\JobPortal
  *
- * @property string           $Pattern
- * @property IAuthenticator   $Authenticator
- * @property Entity           $Credentials
- * @property IRoleChecker     $RoleChecker
- * @property string           $RoleName
- * @property callback         $CallbackUrl
- * @property callback         $Callback
- * @property array            $ExceptionPaths
+ * @property string                       $Pattern
+ * @property IAuthenticator               $Authenticator
+ * @property Entity                       $Credentials
+ * @property ICheckerCollection           $Checkers
+ * @property callback                     $CallbackUrl
+ * @property callback                     $Callback
+ * @property array                        $ExceptionPaths
  */
 class AccessRestriction extends Base
 {
@@ -34,13 +35,17 @@ class AccessRestriction extends Base
      */
     private $credentials;
     /**
-     * @var IRoleChecker
+     * @var ICheckerCollection
      */
-    private $roleChecker;
-    /**
-     * @var string
-     */
-    private $roleName;
+    private $checkers;
+//    /**
+//     * @var IRoleChecker
+//     */
+//    private $roleChecker;
+//    /**
+//     * @var string
+//     */
+//    private $roleName;
     /**
      * @var string
      */
@@ -54,22 +59,25 @@ class AccessRestriction extends Base
      */
     private $exceptionPaths;
 
+//* @param IRoleChecker   $roleChecker
+//* @param string         $roleName
+
     /**
-     * @param string         $pattern
-     * @param IAuthenticator $authenticator
-     * @param Entity         $credentials
-     * @param IRoleChecker   $roleChecker
-     * @param string         $roleName
-     * @param string         $callbackUrl
-     * @param callback       $callback
-     * @param array          $exceptionPaths
+     * @param string             $pattern
+     * @param IAuthenticator     $authenticator
+     * @param Entity             $credentials
+     * @param ICheckerCollection $checkers
+     * @param string             $callbackUrl
+     * @param callback           $callback
+     * @param array              $exceptionPaths
      */
     public function __construct(
         $pattern = '',
         IAuthenticator $authenticator = null,
         Entity $credentials = null,
-        IRoleChecker $roleChecker = null,
-        $roleName = '',
+//        IRoleChecker $roleChecker = null,
+//        $roleName = '',
+        ICheckerCollection $checkers = null,
         $callbackUrl = '',
         $callback = null,
         $exceptionPaths = array()
@@ -77,8 +85,9 @@ class AccessRestriction extends Base
         $this->pattern = $pattern;
         $this->authenticator = $authenticator;
         $this->credentials = $credentials;
-        $this->roleChecker = $roleChecker;
-        $this->roleName = $roleName;
+//        $this->roleChecker = $roleChecker;
+//        $this->roleName = $roleName;
+        $this - $checkers = $checkers;
         $this->callbackUrl = $callbackUrl;
         $this->callback = $callback;
         $this->exceptionPaths = $exceptionPaths;
@@ -114,24 +123,34 @@ class AccessRestriction extends Base
         $this->credentials = $credentials;
     }
 
-    public function getRoleChecker()
+//    public function getRoleChecker()
+//    {
+//        return $this->roleChecker;
+//    }
+//
+//    public function setRoleChecker(IRoleChecker $roleChecker = null)
+//    {
+//        $this->roleChecker = $roleChecker;
+//    }
+//
+//    public function getRoleName()
+//    {
+//        return $this->roleName;
+//    }
+//
+//    public function setRoleName($roleName = '')
+//    {
+//        $this->roleName = $roleName;
+//    }
+
+    public function getCheckers()
     {
-        return $this->roleChecker;
+        return $this->checkers;
     }
 
-    public function setRoleChecker(IRoleChecker $roleChecker = null)
+    public function setCheckers($checkers = '')
     {
-        $this->roleChecker = $roleChecker;
-    }
-
-    public function getRoleName()
-    {
-        return $this->roleName;
-    }
-
-    public function setRoleName($roleName = '')
-    {
-        $this->roleName = $roleName;
+        $this->checkers = $checkers;
     }
 
     public function getCallbackUrl()

@@ -9,7 +9,7 @@ interface IAuthenticator
     /**
      * @param Entity $credentialEntity
      *
-     * @return boolean
+     * @return int
      */
     public function check(Entity $credentialEntity);
 }

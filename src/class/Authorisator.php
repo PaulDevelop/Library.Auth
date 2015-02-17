@@ -56,12 +56,21 @@ class Authorisator extends Base
                 )
                 ) {
 //                    if (($id = $accessRestriction->Authenticator->check($credentials)) !== false) {
-                    if (($id = $accessRestriction->Authenticator->check($accessRestriction->Credentials)) !== false) {
+                    if (($id = $accessRestriction->Authenticator->check($accessRestriction->Credentials)) !== 0) { // false
                         // check, if user impersonates given role
                         //if (!$this->roleChecker->check($id, $accessRestriction->RoleName)) {
-                        if (!$accessRestriction->RoleChecker->check($id, $accessRestriction->RoleName)) {
-                            $result = false;
+
+//                        if (!$accessRestriction->RoleChecker->check($id, $accessRestriction->RoleName)) {
+//                            $result = false;
+//                        }
+                        foreach ( $accessRestriction->Checkers as $checker ) {
+                            /** @var IChecker $checker */
+                            if ( !$checker->check($id) ) {
+                                $result = false;
+                                break;
+                            }
                         }
+
                     } else {
                         $result = false;
                         if ($accessRestriction->CallbackUrl != '') {
