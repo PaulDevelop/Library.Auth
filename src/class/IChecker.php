@@ -6,7 +6,7 @@ use Com\PaulDevelop\Library\Persistence\Entity;
 
 interface IChecker
 {
-    public function __construct(Entity $value = null);
+    public function __construct(Entity $referenceValue = null);
 
     /**
      * @param int $id User id
