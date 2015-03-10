@@ -60,7 +60,7 @@ class Authorisator extends Base
                     //if (($id = $accessRestriction->Authenticator->check($accessRestriction->Credentials)) !== 0) { // false
                     if ($accessRestriction->Authenticator != null
                         && $accessRestriction->Credentials != null
-                        && ($id = $accessRestriction->Authenticator->check($accessRestriction->Credentials)) !== 0
+                        && ($id = $accessRestriction->Authenticator->check($accessRestriction->Credentials)) == 0 // !== 9
                     ) {
                         $result = false;
                         // check, if user impersonates given role
