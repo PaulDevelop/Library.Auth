@@ -31,11 +31,13 @@ class Authorisator extends Base
 
     public function addAccessRestriction(AccessRestriction $accessRestriction = null)
     {
-        /** @var Property $property */
-        foreach ($accessRestriction->Credentials->Properties as $property) {
-            if (preg_match('/%(.*?)%/', $property->Value, $matches)) {
-                $variableName = $matches[1];
-                $property->Value = $this->variables[$variableName]->Value;
+        if ($accessRestriction != null && $accessRestriction->Credentials != null) {
+            /** @var Property $property */
+            foreach ($accessRestriction->Credentials->Properties as $property) {
+                if (preg_match('/%(.*?)%/', $property->Value, $matches)) {
+                    $variableName = $matches[1];
+                    $property->Value = $this->variables[$variableName]->Value;
+                }
             }
         }
         $this->collection->add($accessRestriction);
@@ -95,6 +97,9 @@ class Authorisator extends Base
                             call_user_func($accessRestriction->Callback);
                         }
                     }
+                    //else {
+                    //    $result = $id;
+                    //}
                 }
 
                 break;
