@@ -93,6 +93,7 @@ class Authorisator extends Base
                         if ($accessRestriction->CallbackUrl != '') {
                             $accessRestrictionCallbackUrl = $this->replaceVariables($accessRestriction->CallbackUrl);
                             header('Location: '.$accessRestrictionCallbackUrl);
+                            exit;
                         } else {
                             call_user_func($accessRestriction->Callback);
                         }
